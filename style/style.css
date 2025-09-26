@@ -1,0 +1,279 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- SIDEBAR COM O NOVO AZUL ESCURO --- */
+.sidebar {
+  width: 280px;
+  /* ATUALIZAÇÃO: Gradiente de azul escuro, exatamente como na tela de login */
+  background: linear-gradient(135deg, rgb(16, 51, 82) 0%, rgb(20, 65, 105) 100%);
+  color: white;
+  padding: 2rem 0;
+  box-shadow: 4px 0 15px rgba(16, 51, 82, 0.2);
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 2rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+}
+
+.logo-icon {
+  width:80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.5s;
+}
+
+.menu-item:hover::before {
+  left: 100%;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(5px);
+}
+
+.menu-item.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.menu-item span {
+  font-size: 1rem;
+}
+
+/* --- CONTEÚDO PRINCIPAL --- */
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 2rem;
+  background-color: #f8fafc;
+}
+
+/* --- CABEÇALHO COM O NOVO AZUL ESCURO --- */
+.main-header {
+  /* ATUALIZAÇÃO: Fundo sólido de azul escuro */
+  background: #103352;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(16, 51, 82, 0.1);
+}
+
+.main-header h1 {
+  font-size: 2.5rem;
+  /* ATUALIZAÇÃO: Cor do texto para branco para ser legível */
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.main-header p {
+  font-size: 1.2rem;
+  /* ATUALIZAÇÃO: Cor do texto para cinza claro */
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.main-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+/* --- TÍTULOS COM O NOVO AZUL ESCURO --- */
+.main-section h2 {
+  /* ATUALIZAÇÃO: Cor do título para o azul escuro padrão */
+  color: #103352;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.main-section p {
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.main-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.main-section li {
+  color: #64748b;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+/* --- ÍCONE DE CHECK COM COR AJUSTADA --- */
+.main-section li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  /* ATUALIZAÇÃO: Cor do ícone para um azul que combina com o tema escuro */
+  color: #3b82f6;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* --- RESPONSIVIDADE (sem alterações de cor) --- */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  .main-header h1 {
+    font-size: 2rem;
+  }
+  
+  .menu-item span {
+    display: none;
+  }
+  
+  .sidebar {
+    width: 80px;
+  }
+  
+  .main-content {
+    margin-left: 80px;
+  }
+  
+  .sidebar-header {
+    padding: 1rem 0;
+  }
+  
+  .brand-title {
+    display: none;
+  }
+  
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0;
+    z-index: 1000;
+  }
+  
+  .sidebar-header {
+    display: none;
+  }
+  
+  .sidebar-menu {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0 1rem;
+  }
+  
+  .menu-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    min-width: 60px;
+  }
+  
+  .menu-item span {
+    display: block;
+    font-size: 0.75rem;
+  }
+  
+  .menu-item svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    margin-bottom: 80px;
+  }
+}

@@ -1,0 +1,1827 @@
+/* style/custom.css */
+
+/* --- Estilos para Formulários --- */
+.form-container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.custom-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-form label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #3730a3;
+}
+
+.custom-form input[type="text"],
+.custom-form input[type="email"],
+.custom-form input[type="password"],
+.custom-form input[type="file"],
+.custom-form textarea,
+.custom-form select,
+.custom-select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    font-size: 1rem;
+    color: #1e40af;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-form input:focus,
+.custom-form textarea:focus,
+.custom-form select:focus,
+.custom-select:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+}
+
+.custom-button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.custom-button:hover {
+    background: #2563eb;
+}
+
+.form-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.form-link a {
+    color: #3b82f6;
+    font-weight: 600;
+    text-decoration: none;
+}
+.form-link a:hover {
+    text-decoration: underline;
+}
+
+/* Mensagens de erro/sucesso */
+.message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+.message.error {
+    background-color: #fecaca;
+    color: #991b1b;
+}
+.message.success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+/* --- Estilos para Lista de Feedbacks --- */
+.feedback-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.feedback-list li {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.feedback-list .feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.feedback-list .user-info {
+    font-weight: 600;
+    color: #1e40af;
+}
+
+.feedback-list .feedback-date {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.feedback-list .nota {
+    color: #f59e0b; /* Amarelo/Laranja para estrelas */
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-list .comentario {
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* --- Estilos para Estatísticas --- */
+.filters-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    background-color: #f8fafc;
+    padding: 1rem;
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter label {
+    font-weight: 600;
+    color: #3730a3;
+}
+
+.chart-container {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+/* --- Estilos para Página de Serviços (local.html) --- */
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.service-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+}
+
+.service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h3 {
+    color: #1e40af;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-content p {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.card-badge {
+    display: inline-block;
+    background-color: #dbeafe;
+    color: #1e40af;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.map-container {
+    width: 100%;
+    height: 450px;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+/* --- Estilos para a Tela de Entrada (login.html) --- */
+.login-splash-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg,
+      rgba(16, 51, 82, 0.95) 0%,
+      rgba(16, 51, 82, 0.85) 60%,
+      rgba(255, 255, 255, 0.95) 60%,
+      rgba(255, 255, 255, 0.98) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+    padding: 20px;
+}
+
+.login-splash-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(circle at 20% 80%, rgba(16, 51, 82, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.auth-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    min-height: 80vh;
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.logo-section {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(16, 51, 82, 0.9) 0%, rgba(20, 65, 105, 0.8) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.icon-container {
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.button-section {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-btn, .enter-without-login-btn {
+    padding: 20px 45px;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 320px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
+.login-btn {
+    background: linear-gradient(135deg, rgba(16, 51, 82, 0.9) 0%, rgba(20, 65, 105, 0.85) 100%);
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(16, 51, 82, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.login-btn:hover {
+    background: linear-gradient(135deg, rgba(20, 65, 105, 0.95) 0%, rgba(25, 80, 128, 0.9) 100%);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(16, 51, 82, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.enter-without-login-btn {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 237, 78, 0.85) 100%);
+    color: rgba(16, 51, 82, 0.9);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.enter-without-login-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 237, 78, 0.95) 0%, rgba(255, 245, 120, 0.9) 100%);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+    }
+}
+
+/* --- Estilos para Notificação de Login (Toast) --- */
+.toast-notification {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    background-color: #3b82f6; /* Verde sucesso */
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(120%);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+/* --- Estilos para o Pop-up (Modal) de Logout --- */
+.logout-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 3000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.logout-modal-overlay.show {
+    opacity: 1;
+}
+
+.logout-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: white;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 3001;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.logout-modal.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.logout-modal-content h3 {
+    color: #1e40af;
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.logout-modal-content p {
+    color: #475569;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.logout-modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.logout-modal-buttons button {
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+}
+
+.modal-btn-confirm {
+    background-color: #ef4444; /* Vermelho */
+    color: white;
+}
+
+.modal-btn-confirm:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+}
+
+.modal-btn-cancel {
+    background-color: #e2e8f0; /* Cinza claro */
+    color: #475569;
+}
+
+.modal-btn-cancel:hover {
+    background-color: #cbd5e1;
+    transform: translateY(-2px);
+}
+
+/* --- Estilo para exibição do usuário logado --- */
+.main-content {
+    position: relative; /* Essencial para posicionar a caixa de informações dentro dele */
+}
+
+.user-info-display {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background-color: #ffffff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: right;
+    font-size: 0.9rem;
+    border: 1px solid #e2e8f0;
+    z-index: 100;
+}
+
+.user-info-display strong {
+    display: block;
+    color: #103352; /* Azul escuro para o nome */
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.user-info-display span {
+    color: #64748b; /* Cinza para o e-mail */
+    font-size: 0.8rem;
+}
+
+
+.hero-section {
+    /* ATUALIZAÇÃO: Trocamos a imagem de fundo pelo gradiente azul escuro */
+    background: linear-gradient(135deg, rgb(16, 51, 82) 0%, rgb(20, 65, 105) 100%);
+    background-size: cover;
+    background-position: center;
+    padding: 6rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+/* O restante do seu CSS para a página inicial continua igual... */
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+    color: #e2e8f0; /* Cinza claro para o parágrafo */
+}
+
+.hero-cta-button {
+    background-color: #ffcc00; /* Amarelo da sua logo */
+    color: #103352; /* Azul escuro */
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.hero-cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+}
+
+/* Seção de Informações / Como Funciona */
+.info-section {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.info-section h2 {
+    color: #103352;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.step-card {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e2e8f0;
+    flex: 1;
+    min-width: 280px;
+}
+
+.step-card i {
+    font-size: 2.5rem;
+    color: #3b82f6; /* Azul médio para ícones */
+    margin-bottom: 1rem;
+}
+
+.step-card h3 {
+    color: #103352;
+    margin-bottom: 0.5rem;
+}
+
+.step-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Seção da Galeria de Imagens */
+.gallery-section {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.gallery-section h2 {
+    color: #103352;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-subtitle {
+    color: #64748b;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.03);
+}
+
+/* Seção de Depoimentos */
+.testimonials-section {
+    background-color: #f8fafc;
+    padding: 3rem 1rem;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    color: #103352;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+.testimonial-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.testimonial-card {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e2e8f0;
+    max-width: 400px;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card span {
+    font-weight: 600;
+    color: #103352;
+}
+
+/*
+================================================
+--- NOVOS ESTILOS PARA A PÁGINA INICIAL (INDEX) ---
+================================================
+*/
+
+/* Remove o padding padrão para a nova estrutura */
+.main-content#index-main {
+    padding: 0;
+}
+
+/* 1. Estilos da Seção Principal (Hero) */
+.new-hero {
+    background-color: #f8fafc; /* Um fundo quase branco */
+    display: flex;
+    align-items: center;
+    padding: 4rem 2rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.hero-text h1 {
+    font-size: 3.2rem;
+    color: #103352; /* Azul escuro */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: #64748b; /* Cinza */
+    margin-bottom: 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background-color: #103352;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #144169;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #103352;
+    border-color: #103352;
+}
+.btn-secondary:hover {
+    background-color: #103352;
+    color: white;
+}
+
+.hero-image {
+    flex: 1;
+    min-width: 300px;
+}
+
+.hero-image img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* 2. Estilos da Seção "Como Funciona" */
+.how-it-works {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.how-it-works h2 {
+    font-size: 2.2rem;
+    color: #103352;
+    margin-bottom: 3rem;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex: 1;
+    min-width: 250px;
+}
+
+.step-icon {
+    font-size: 2.5rem;
+    color: #ffcc00; /* Amarelo da logo */
+    background-color: #103352;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.step h3 {
+    font-size: 1.2rem;
+    color: #103352;
+    margin-bottom: 0.5rem;
+}
+
+.step p {
+    color: #64748b;
+}
+
+/* 3. Estilos da Seção de Serviços em Destaque */
+.featured-services {
+    padding: 4rem 2rem;
+    background-color: #f8fafc;
+}
+
+.featured-services h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #103352;
+    margin-bottom: 3rem;
+}
+
+.service-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease;
+}
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.service-card-content {
+    padding: 1.5rem;
+}
+
+.service-card-content h3 {
+    color: #103352;
+    margin-bottom: 0.5rem;
+}
+
+.service-card-content p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.service-card-content a {
+    color: #103352;
+    font-weight: 600;
+    text-decoration: none;
+}
+.service-card-content a:hover {
+    text-decoration: underline;
+}
+
+/* 4. Estilos do Rodapé (Footer) */
+.main-footer {
+    background-color: #103352;
+    color: #e2e8f0;
+    padding: 3rem 2rem 1rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h4 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: #e2e8f0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.footer-section a:hover {
+    color: #ffcc00; /* Amarelo da logo */
+}
+
+.social-icons a {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* --- ESTILOS DA NOVA SEÇÃO "SOBRE NÓS" --- */
+
+.about-us-section {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 4rem 2rem;
+    background-color: #ffffff;
+    flex-wrap: wrap;
+}
+
+.about-us-content {
+    flex: 1.2; /* Dando um pouco mais de espaço para o texto */
+    min-width: 320px;
+}
+
+.section-tagline {
+    color: #3b82f6; /* Azul médio */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.about-us-content h2 {
+    font-size: 2.5rem;
+    color: #103352;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.about-us-content p {
+    color: #64748b;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.our-values {
+    list-style: none;
+    padding: 0;
+}
+
+.our-values li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #475569;
+}
+
+.our-values i {
+    font-size: 1.2rem;
+    color: #ffcc00; /* Amarelo da logo */
+    margin-top: 5px;
+}
+
+.about-us-image {
+    flex: 1;
+    min-width: 320px;
+}
+
+.about-us-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+} 
+
+/* --- ESTILOS PARA A PÁGINA DE DETALHES DO SERVIÇO --- */
+
+/* Link do card de serviço */
+.service-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Cabeçalho da página de detalhes */
+.service-header {
+    background: linear-gradient(135deg, rgb(16, 51, 82) 0%, rgb(20, 65, 105) 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.service-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.service-header p {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+}
+
+.prestador-list-main {
+    flex: 2;
+    background-color: #ffffff; /* Adiciona um fundo branco ao painel */
+    padding: 2rem;             /* Cria um espaçamento interno */
+    border-radius: 16px;       /* Arredonda as bordas para combinar com o resto do site */
+    border: 1px solid #e2e8f0; /* Adiciona uma borda muito subtil */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* A sombra que vai criar a separação! */
+}
+
+/* Card de cada Prestador */
+.prestador-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.prestador-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.prestador-avatar {
+    font-size: 3.5rem;
+    color: #cbd5e1;
+    margin-right: 1rem;
+}
+
+.prestador-info {
+    flex: 1;
+}
+
+.prestador-info h3 {
+    color: #103352;
+    margin: 0 0 0.5rem;
+    font-size: 1.4rem;
+}
+
+.prestador-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.prestador-rating .stars {
+    font-size: 1.2rem;
+}
+
+.prestador-rating .rating-text {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.prestador-action {
+    margin-left: auto;
+}
+
+.btn-ver-perfil {
+    background-color: #103352;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-ver-perfil:hover {
+    background-color: #1a4a75;
+}
+
+.no-results {
+    text-align: center;
+    color: #64748b;
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+/* --- ESTILOS DA PÁGINA DE DETALHES (servico_detalhe.php) --- */
+
+/* Barra de Busca */
+.search-tool-section {
+    background-color: #f8fafc;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+.search-tool-section form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.search-wrapper {
+    flex: 1;
+    position: relative;
+}
+.search-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+.search-wrapper input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.search-tool-section button {
+    background-color: #103352;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.search-tool-section button:hover {
+    background-color: #1a4a75;
+}
+
+/* Layout de duas colunas */
+.content-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+.prestador-list-main {
+    flex: 2; /* Ocupa 2/3 do espaço */
+}
+
+.recent-feedbacks-sidebar {
+    flex: 1;
+    background-color: #ffffff; /* Fundo branco para criar contraste */
+    padding: 1.5rem;
+    position: sticky;
+    top: 2rem;
+    
+    /* Estilo do painel */
+    border-radius: 16px;       /* Mantém as bordas arredondadas */
+    border: 1px solid #e2e8f0; /* Uma borda fina em todos os lados */
+    
+    /* O destaque visual */
+    border-top: 5px solid #ffcc00; /* Borda amarela grossa no topo! */
+}
+
+/* Ajuste no título para alinhar com a nova borda */
+.recent-feedbacks-sidebar h3 {
+    color: #103352;
+    margin-top: 0;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.feedback-card-small {
+    margin-bottom: 1.5rem;
+}
+.feedback-card-small .comment {
+    font-style: italic;
+    color: #475569;
+    margin: 0 0 0.8rem;
+}
+.feedback-card-small .author-info {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+.feedback-card-small .author-info strong {
+    color: #1e40af;
+}
+.stars-small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 1rem;
+}
+
+/* --- ESTILOS DA PÁGINA DE PERFIL (perfil_prestador.php) --- */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background-color: #f8fafc;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+}
+.profile-avatar i {
+    font-size: 6rem;
+    color: #103352;
+}
+.profile-summary h1 {
+    margin: 0 0 0.2rem;
+    font-size: 2.2rem;
+    color: #103352;
+}
+.profile-summary h2 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #3b82f6;
+}
+.profile-overall-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+.profile-overall-rating .stars {
+    font-size: 1.5rem;
+}
+.profile-overall-rating strong {
+    font-size: 1.2rem;
+    color: #103352;
+}
+.profile-overall-rating span {
+    color: #64748b;
+}
+
+.profile-body h3 {
+    font-size: 1.8rem;
+    color: #103352;
+    margin-bottom: 1.5rem;
+}
+.feedback-list-full {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.feedback-item {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+.feedback-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 0.8rem;
+}
+.feedback-author, .feedback-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.feedback-item-body .stars {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.feedback-item-body p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .content-layout {
+        flex-direction: column;
+    }
+    .recent-feedbacks-sidebar {
+        position: static;
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* --- ESTILOS PARA A PÁGINA DE ERRO (404) --- */
+
+.error-page-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #103352; /* Azul escuro do tema */
+    color: #f8fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+}
+
+.error-container {
+    max-width: 600px;
+}
+
+.error-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: 700;
+    color: #ffcc00; /* Amarelo da logo */
+    margin: 0;
+    line-height: 1;
+}
+
+.error-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.error-button {
+    background-color: #ffcc00;
+    color: #103352;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.error-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+}
+
+/* --- ESTILOS ATUALIZADOS PARA PÁGINA DE DETALHES DO SERVIÇO --- */
+
+/* CORREÇÃO: Adiciona espaço abaixo do parágrafo do cabeçalho */
+.service-header p {
+    margin-bottom: 2rem; 
+}
+
+/* BOTÕES DE AÇÃO NA PÁGINA DE SERVIÇO */
+.service-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+.service-header .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+    color: #ffffff;
+}
+.service-header .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* LAYOUT DE DUAS COLUNAS */
+.content-layout {
+    display: flex;
+    flex-wrap: wrap; /* Permite que a sidebar vá para baixo em telas pequenas */
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+}
+.prestador-list-main {
+    flex: 2; /* Ocupa 2/3 do espaço */
+    min-width: 300px;
+}
+.recent-feedbacks-sidebar {
+    flex: 1; /* Ocupa 1/3 do espaço */
+    min-width: 280px;
+    background-color: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    position: sticky; 
+    top: 2rem;
+}
+
+/* ESTILOS PARA A BARRA LATERAL DE FEEDBACKS RECENTES */
+.recent-feedbacks-sidebar h3 {
+    color: #103352;
+    margin-top: 0;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+.feedback-card-small {
+    margin-bottom: 1.5rem;
+}
+.feedback-card-small:last-child {
+    margin-bottom: 0;
+}
+.feedback-card-small .comment {
+    font-style: italic;
+    color: #475569;
+    margin: 0 0 0.8rem;
+    word-wrap: break-word;
+}
+.feedback-card-small .author-info {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+.feedback-card-small .author-info strong {
+    color: #1e40af;
+}
+.stars-small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 1rem;
+}
+
+/* --- ESTILO ATUALIZADO E MELHORADO PARA O MODAL DE FEEDBACKS --- */
+
+.modal-overlay {
+    backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+    padding: 20px;
+}
+.modal-content {
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    border: none;
+}
+/* Efeito de entrada suave */
+.modal-overlay[style*="display: flex"] .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+.modal-header h3 {
+    font-size: 1.5rem;
+}
+.modal-body {
+    background-color: #f8fafc; /* Fundo levemente cinza que já tinhas */
+    
+    /* --- CÓDIGO NOVO ADICIONADO ABAIXO --- */
+    margin: 1.5rem;            /* Cria uma margem para o separar das bordas do modal */
+    padding: 1.5rem;           /* Adiciona um bom espaçamento interno */
+    border-radius: 12px;       /* Arredonda os cantos do painel */
+    border: 1px solid #e2e8f0; /* Adiciona uma borda subtil para definir a área */
+}
+
+/* REMOVE O ESTILO DE TABELA PADRÃO */
+.modal-body table, .modal-body thead, .modal-body tbody, .modal-body tr {
+    display: block;
+}
+.modal-body thead {
+    display: none; /* Esconde o cabeçalho da tabela antiga */
+}
+
+/* NOVO LAYOUT DE CARDS USANDO OS ELEMENTOS DA TABELA */
+.modal-body tr {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.modal-body td {
+    border: none;
+    padding: 0;
+    display: block; /* Garante que cada TD se comporte como um bloco */
+}
+
+/* Organiza os TDs como um card */
+.modal-body td:nth-child(1)::before { content: "Usuário: "; font-weight: 600; color: #1e40af; }
+.modal-body td:nth-child(2)::before { content: "Prestador: "; font-weight: 600; }
+.modal-body td:nth-child(5)::before { content: "Data: "; font-weight: 600; }
+
+.modal-body td:nth-child(1), /* Usuário */
+.modal-body td:nth-child(2), /* Prestador */
+.modal-body td:nth-child(5)  /* Data */
+{
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.modal-body td:nth-child(3) { /* Nota (estrelas) */
+    font-size: 1.2rem;
+    order: -2; /* Joga as estrelas para cima */
+}
+.modal-body td:nth-child(4) { /* Comentário */
+    font-size: 1rem;
+    font-style: italic;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0.75rem 0;
+    order: -1; /* Joga o comentário para baixo das estrelas */
+}
+
+/* --- ESTILO PARA A SEÇÃO "SOBRE" NO PERFIL DO PRESTADOR --- */
+
+.profile-about-section {
+    background-color: #f8fafc; /* Fundo cinza claro */
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2.5rem; /* Espaço antes da seção de feedbacks */
+}
+
+.profile-about-section h3 {
+    color: #103352; /* Azul escuro do tema */
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.profile-about-section p {
+    color: #475569; /* Cinza escuro para o texto */
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* --- ESTILO MELHORADO PARA O BOTÃO DE FECHAR O MODAL --- */
+
+/* Adicionado para garantir que o posicionamento do botão funcione bem */
+.modal-header {
+    position: relative;
+}
+
+.modal-close-btn {
+    /* Posicionamento e Reset de Estilo */
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent; /* Remove o fundo cinzento padrão */
+    border: none; /* Remove a borda padrão */
+    padding: 5px;
+    
+    /* Aparência do "X" */
+    font-size: 2rem;  /* Deixa o "X" maior */
+    font-weight: 300; /* Deixa o traço do "X" mais fino e elegante */
+    color: #94a3b8;   /* Um tom de cinza suave */
+    line-height: 1;   /* Garante alinhamento vertical */
+    
+    /* Interatividade */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* Adiciona uma animação suave */
+}
+
+.modal-close-btn:hover {
+    color: #ef4444; /* Fica vermelho ao passar o rato por cima */
+    transform: scale(1.1); /* Aumenta um pouco de tamanho para dar feedback */
+}
+
+/* --- ESTILOS PARA O NOVO MODAL DE FEEDBACK --- */
+.feedback-modal-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 51, 82, 0.7); /* Fundo azul escuro semitransparente */
+    backdrop-filter: blur(5px);
+    z-index: 4000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.feedback-modal-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeInScale 0.3s ease-in-out;
+}
+
+.feedback-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.feedback-modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #103352;
+}
+
+.feedback-modal-body {
+    padding: 2rem;
+}
+.feedback-modal-body p {
+    color: #64748b;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Animação de entrada do Modal */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* BOTÕES DE AÇÃO NA PÁGINA DE SERVIÇO (Atualizado) */
+.service-header .btn-primary, .service-header .btn-secondary {
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+.service-header .btn-primary {
+    background-color: #ffcc00;
+    color: #103352;
+}
+.service-header .btn-primary:hover {
+    background-color: #e6b800;
+    transform: translateY(-2px);
+}
+.service-header .btn-secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+.service-header .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.service-header .btn-primary i {
+    margin-right: 0.5rem;
+}
+
+/* --- ESTILOS PARA O NOVO PAINEL DE ESTATÍSTICAS --- */
+
+/* Grid para os cartões de KPI */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Estilo de cada cartão de KPI */
+.kpi-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Ícone dentro do cartão */
+.kpi-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+/* Textos do cartão */
+.kpi-info {
+    display: flex;
+    flex-direction: column;
+}
+.kpi-title {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+.kpi-value {
+    color: #103352;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Painel principal do dashboard que agrupa filtros e gráfico */
+.dashboard-panel {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.dashboard-panel h4 {
+    color: #103352;
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Ajustes nos filtros para o novo painel */
+.filters-container {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    border-radius: 0;
+}
+
+/* --- ESTILOS PARA O PAINEL DE ESTATÍSTICAS NO PERFIL --- */
+
+.profile-stats-panel {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.profile-stats-panel h3 {
+    color: #103352;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.profile-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Reutilizando o estilo .kpi-card que já criamos */
+.profile-kpi-grid .kpi-card {
+    box-shadow: none; /* Sombra mais suave para o painel interno */
+}
+.profile-kpi-grid .kpi-card:hover {
+    transform: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+
+.profile-chart-container {
+    position: relative;
+    height: 300px; /* Altura fixa para o gráfico */
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
