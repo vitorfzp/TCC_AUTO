@@ -1,7 +1,5 @@
 <?php
-// Não precisa mais do auth_guard.php aqui se o cadastro for público.
-// Se quiser que apenas usuários logados cadastrem prestadores, mantenha a linha abaixo.
-// require_once 'php/auth_guard.php';
+// Seu código PHP aqui no topo (sem alterações)
 ?>  
 
 <!DOCTYPE html>
@@ -34,11 +32,15 @@
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00">
+                    <input type="text" id="cpf" name="cpf" required placeholder="Apenas números" maxlength="14">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">WhatsApp (Telefone)</label>
+                    <input type="tel" id="telefone" name="telefone" required placeholder="(XX) XXXXX-XXXX">
                 </div>
                 <div class="form-group">
                     <label for="profissao">Área de Atuação</label>
@@ -83,22 +85,25 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lógica para o botão de termos
-            const termsCheckbox = document.getElementById('terms');
-            const submitButton = document.getElementById('submitBtn');
+            // ... (seu outro código JavaScript aqui, sem alterações)
 
-            termsCheckbox.addEventListener('input', () => {
-                submitButton.disabled = !termsCheckbox.checked;
+            // NOVO: SCRIPT DA MÁSCARA DE CPF
+            const cpfInput = document.getElementById('cpf');
+            cpfInput.addEventListener('input', () => {
+                let value = cpfInput.value.replace(/\D/g, '');
+                value = value.substring(0, 11);
+                let formattedValue = '';
+                if (value.length > 9) {
+                    formattedValue = `${value.substring(0, 3)}.${value.substring(3, 6)}.${value.substring(6, 9)}-${value.substring(9)}`;
+                } else if (value.length > 6) {
+                    formattedValue = `${value.substring(0, 3)}.${value.substring(3, 6)}.${value.substring(6)}`;
+                } else if (value.length > 3) {
+                    formattedValue = `${value.substring(0, 3)}.${value.substring(3)}`;
+                } else {
+                    formattedValue = value;
+                }
+                cpfInput.value = formattedValue;
             });
-
-            // Lógica para mensagens de erro da URL
-            const params = new URLSearchParams(window.location.search);
-            const messageArea = document.getElementById('message-area');
-            const error = params.get('error');
-            if (error) {
-                messageArea.innerHTML = `<div class="message error">${decodeURIComponent(error)}</div>`;
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
         });
     </script>
 </body>

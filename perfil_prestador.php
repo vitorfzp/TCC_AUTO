@@ -8,10 +8,15 @@ if (empty($nome_prestador)) {
 }
 
 try {
-    // Busca a descrição (mensagem) do profissional
-    $stmt_info = $pdo->prepare("SELECT mensagem FROM prestadores WHERE nome = ?");
+    // ATUALIZADO: Busca a mensagem, telefone e profissão do profissional
+    $stmt_info = $pdo->prepare("SELECT mensagem, telefone, profissao FROM prestadores WHERE nome = ?");
     $stmt_info->execute([$nome_prestador]);
     $prestador_info = $stmt_info->fetch();
+
+    if (!$prestador_info) {
+        // Se não encontrar o prestador, encerra a execução.
+        die("Prestador não encontrado.");
+    }
 
     // Busca TODOS os feedbacks individuais para este prestador
     $stmt_feedbacks = $pdo->prepare("
@@ -38,11 +43,21 @@ try {
         $media_notas = $soma_notas / $total_avaliacoes;
     }
 
-    // Pega a profissão do primeiro feedback (ou define um padrão)
-    $profissao = $feedbacks[0]['profissao'] ?? 'Profissional';
-
 } catch (PDOException $e) {
     die("Erro ao buscar perfil do prestador: " . $e->getMessage());
+}
+
+// NOVA FUNÇÃO: Prepara o link para o WhatsApp
+function formatar_link_whatsapp($telefone, $nome_prestador) {
+    if (empty($telefone)) {
+        return null;
+    }
+    // Remove todos os caracteres que não são números
+    $numero_limpo = preg_replace('/\D/', '', $telefone);
+    // Cria uma mensagem padrão
+    $mensagem = urlencode("Olá " . $nome_prestador . ", encontrei seu contato no site Autonowe e gostaria de mais informações.");
+    // Retorna o link completo
+    return "https://wa.me/55" . $numero_limpo . "?text=" . $mensagem;
 }
 ?>
 
@@ -60,14 +75,13 @@ try {
 </head>
 <body>
     <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="img/logoc.png" alt="Logo Autonowe" class="logo-icon" />
-            <h2 class="brand-title">AUTONOWE</h2>
-        </div>
+    <div class="sidebar-header">
+      <img src="img/LOGO.png" alt="Logo Autonowe" class="logo-icon" />
+      <h2 class="brand-title">AUTONOWE</h2>
+    </div>
         <nav class="sidebar-menu">
             <a href="index.php" class="menu-item" title="Início"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span></a>
             <a href="local.php" class="menu-item active" title="Serviços"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Serviços</span></a>
-            <a href="estaticas.php" class="menu-item" title="Estatísticas"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span>Estatísticas</span></a>
             <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
         </nav>
     </aside>
@@ -78,14 +92,25 @@ try {
                 <div class="profile-avatar"><i class="fas fa-user-shield"></i></div>
                 <div class="profile-summary">
                     <h1><?php echo htmlspecialchars($nome_prestador); ?></h1>
-                    <h2><?php echo htmlspecialchars($profissao); ?></h2>
+                    <h2><?php echo htmlspecialchars($prestador_info['profissao']); ?></h2>
                     <div class="profile-overall-rating">
                         <span class="stars"><?php echo str_repeat('⭐', round($media_notas)); ?></span>
                         <strong><?php echo number_format($media_notas, 1, ','); ?></strong>
                         <span>(baseado em <?php echo $total_avaliacoes; ?> avaliações)</span>
                     </div>
                 </div>
-            </div>
+
+                <?php 
+                $link_whatsapp = formatar_link_whatsapp($prestador_info['telefone'] ?? null, $nome_prestador);
+                if ($link_whatsapp): 
+                ?>
+                    <div class="profile-contact">
+                        <a href="<?php echo $link_whatsapp; ?>" class="btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Entrar em Contato
+                        </a>
+                    </div>
+                <?php endif; ?>
+                </div>
 
             <div class="profile-body">
                 

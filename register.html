@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+                    <input type="text" id="cpf" name="cpf" required placeholder="Digite apenas os números" maxlength="14">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -69,7 +69,6 @@
             const submitButton = document.getElementById('submitBtn');
 
             termsCheckbox.addEventListener('input', () => {
-                // O botão é ativado se a caixa estiver marcada
                 submitButton.disabled = !termsCheckbox.checked;
             });
 
@@ -106,6 +105,24 @@
                         this.classList.remove('fa-eye'); this.classList.add('fa-eye-slash');
                     }
                 });
+            });
+
+            // NOVO: SCRIPT DA MÁSCARA DE CPF
+            const cpfInput = document.getElementById('cpf');
+            cpfInput.addEventListener('input', () => {
+                let value = cpfInput.value.replace(/\D/g, '');
+                value = value.substring(0, 11);
+                let formattedValue = '';
+                if (value.length > 9) {
+                    formattedValue = `${value.substring(0, 3)}.${value.substring(3, 6)}.${value.substring(6, 9)}-${value.substring(9)}`;
+                } else if (value.length > 6) {
+                    formattedValue = `${value.substring(0, 3)}.${value.substring(3, 6)}.${value.substring(6)}`;
+                } else if (value.length > 3) {
+                    formattedValue = `${value.substring(0, 3)}.${value.substring(3)}`;
+                } else {
+                    formattedValue = value;
+                }
+                cpfInput.value = formattedValue;
             });
         });
     </script>

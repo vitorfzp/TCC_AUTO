@@ -1825,3 +1825,43 @@
     border-radius: 8px;
     border: 1px solid #e2e8f0;
 }
+
+/* --- ESTILOS PARA O BOTÃO WHATSAPP --- */
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #25D366;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px; /* Deixa o botão arredondado */
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(18, 140, 126, 0.4);
+}
+
+.btn-whatsapp i {
+    font-size: 1.5rem;
+}
+
+/* Posição do botão no cabeçalho do perfil */
+.profile-contact {
+    margin-left: auto;
+    align-self: center;
+}
+
+/* Posição do botão no card da lista de serviços */
+.prestador-card .btn-whatsapp {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+.prestador-card .btn-whatsapp i {
+    font-size: 1.2rem;
+}
