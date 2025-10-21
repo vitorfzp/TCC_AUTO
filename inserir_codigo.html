@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Código - Autonowe</title>
+    <link rel="icon" type="image/png" href="img/logo_auto.png">
+    <link rel="stylesheet" href="style/auth_style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo-section">
+            <div class="logo-container">
+                <img src="img/logo_auto.png" alt="AUTONOWE Logo">
+            </div>
+        </div>
+        <div class="form-section">
+            <h2>Verificar Código</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Insira o código de 6 dígitos que enviamos para o seu e-mail.</p>
+            <div id="message-area"></div>
+            <form action="php/usuario/validar_codigo.php" method="post" class="auth-form">
+                <input type="hidden" id="email" name="email">
+
+                <div class="form-group">
+                    <label for="codigo">Código de Verificação</label>
+                    <input type="text" id="codigo" name="codigo" required maxlength="6" pattern="\d{6}" title="Digite o código de 6 dígitos">
+                </div>
+                <button type="submit" class="auth-button">Verificar Código</button>
+            </form>
+             <p class="form-link">
+                Não recebeu o código? <a href="esqueci_senha.html">Solicitar novamente</a>
+            </p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const emailFromUrl = params.get('email');
+            const messageArea = document.getElementById('message-area');
+            const emailInput = document.getElementById('email');
+
+            // Preenche o campo de email escondido com o email da URL
+            if (emailFromUrl) {
+                emailInput.value = emailFromUrl;
+            } else {
+                 messageArea.innerHTML = `<p class="message error">E-mail não especificado. Volte e solicite o código novamente.</p>`;
+                 document.querySelector('.auth-button').disabled = true;
+            }
+
+            // Mostra mensagens de erro que venham de um post falhado
+            const error = params.get('error');
+            if (error) {
+                messageArea.innerHTML = `<p class="message error">${decodeURIComponent(error)}</p>`;
+            }
+             // Limpa a URL (removendo o erro, mas mantendo o email)
+             if(error) {
+                 window.history.replaceState({}, document.title, window.location.pathname + '?email=' + encodeURIComponent(emailFromUrl || ''));
+             }
+        });
+    </script>
+</body>
+</html>

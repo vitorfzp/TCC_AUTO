@@ -21,7 +21,7 @@ try {
     // Busca TODOS os prestadores daquela área (para a lista principal e para o formulário)
     $sql_prestadores = "
         SELECT
-            p.nome AS nome_prestador, p.profissao, AVG(f.nota) AS media_notas, COUNT(f.id) AS total_avaliacoes
+            p.cpf, p.nome AS nome_prestador, p.profissao, AVG(f.nota) AS media_notas, COUNT(f.id) AS total_avaliacoes -- // MUDANÇA 1: Adicionado p.cpf
         FROM prestadores p
         LEFT JOIN feedbacks f ON p.nome = f.nome_prestador AND p.profissao = f.profissao
         WHERE p.profissao = :servico";
@@ -164,12 +164,14 @@ try {
                     <form class="custom-form" action="php/submit_feedback.php" method="POST">
                         <input type="hidden" name="servico_url" value="<?php echo htmlspecialchars($servico_selecionado); ?>">
 
+                        <input type="hidden" id="hidden_nome_prestador" name="nome_prestador" value="">
+
                         <div class="form-group">
-                            <label for="nome_prestador">Selecione o Prestador:</label>
-                            <select id="nome_prestador" name="nome_prestador" class="custom-select" required>
+                            <label for="prestador_cpf_select">Selecione o Prestador:</label>
+                            <select id="prestador_cpf_select" name="prestador_cpf" class="custom-select" required>
                                 <option value="" disabled selected>Escolha um profissional...</option>
                                 <?php foreach ($prestadores as $p): ?>
-                                    <option value="<?php echo htmlspecialchars($p['nome_prestador']); ?>">
+                                    <option value="<?php echo htmlspecialchars($p['cpf']); ?>">
                                         <?php echo htmlspecialchars($p['nome_prestador']); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -227,6 +229,30 @@ try {
                     modalOverlay.style.display = 'none';
                 }
             });
+
+            // --- MUDANÇA 3: INÍCIO DO NOVO CÓDIGO JAVASCRIPT ---
+            // Este script atualiza o campo oculto 'hidden_nome_prestador' com o nome
+            // do prestador selecionado no dropdown.
+            const prestadorSelect = document.getElementById('prestador_cpf_select');
+            const hiddenNomeInput = document.getElementById('hidden_nome_prestador');
+
+            if (prestadorSelect) {
+                // Define o valor inicial (caso haja um valor já selecionado ao carregar)
+                if (prestadorSelect.selectedIndex > 0) {
+                    hiddenNomeInput.value = prestadorSelect.options[prestadorSelect.selectedIndex].text;
+                }
+
+                // Adiciona o "ouvinte" de mudança
+                prestadorSelect.addEventListener('change', () => {
+                    if (prestadorSelect.selectedIndex > 0) {
+                        // Pega o TEXTO da opção selecionada (que é o nome)
+                        hiddenNomeInput.value = prestadorSelect.options[prestadorSelect.selectedIndex].text;
+                    } else {
+                        hiddenNomeInput.value = ''; // Limpa se selecionar o "Escolha..."
+                    }
+                });
+            }
+            // --- FIM DO NOVO CÓDIGO JAVASCRIPT ---
 
             const params = new URLSearchParams(window.location.search);
             const messageArea = document.getElementById('message-area');

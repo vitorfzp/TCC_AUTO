@@ -16,14 +16,14 @@
         </div>
         <div class="form-section">
             <h2>Recuperar Senha</h2>
-            <p style="text-align: center; margin-bottom: 20px;">Insira o seu e-mail e enviaremos um link para redefinir a sua senha.</p>
+            <p style="text-align: center; margin-bottom: 20px;">Insira o seu e-mail para receber um código de recuperação.</p>
             <div id="message-area"></div>
             <form action="php/usuario/request_reset.php" method="post" class="auth-form">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
                 </div>
-                <button type="submit" class="auth-button">Enviar Link de Recuperação</button>
+                <button type="submit" class="auth-button">Enviar Código de Recuperação</button>
             </form>
             <p class="form-link">
                 Lembrou-se da senha? <a href="login.html">Voltar para o Login</a>
@@ -31,14 +31,29 @@
         </div>
     </div>
     <script>
-        // Mostra mensagens de sucesso ou erro que venham na URL
+        // Mostra mensagens (sucesso ou erro) que venham na URL
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const messageArea = document.getElementById('message-area');
             const success = params.get('success');
+            const error = params.get('error'); // Adicionado para mostrar erros também
+
             if (success) {
                 messageArea.innerHTML = `<p class="message success">${decodeURIComponent(success)}</p>`;
+                // Opcional: Redirecionar para inserir_codigo.html após sucesso
+                // setTimeout(() => {
+                //     window.location.href = 'inserir_codigo.html?email=' + encodeURIComponent(document.getElementById('email').value);
+                // }, 3000); // Redireciona após 3 segundos
+            } else if (error) {
+                 messageArea.innerHTML = `<p class="message error">${decodeURIComponent(error)}</p>`;
             }
+
+             // Limpa a URL para que a mensagem não apareça novamente se a página for recarregada
+             if(success || error) {
+                // Mantém o email na URL se houver sucesso, para possível uso na próxima página
+                const emailParam = success ? '?email=' + encodeURIComponent(document.getElementById('email')?.value || '') : '';
+                window.history.replaceState({}, document.title, window.location.pathname + emailParam);
+             }
         });
     </script>
 </body>

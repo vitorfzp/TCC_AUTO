@@ -1,0 +1,189 @@
+/* style/dashboard.css */
+
+/* Remove a barra lateral (sidebar) do estilo principal, pois vamos usar a do 'style.css' */
+.main-content {
+    margin-left: 250px; /* Mesmo valor da sidebar */
+    padding: 0;
+}
+
+/* Header */
+.service-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 2rem;
+}
+
+.service-header h1 {
+    color: #103352;
+    margin: 0;
+}
+.service-header p {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-top: 5px;
+}
+
+/* Estatísticas */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+}
+
+.stat-info h3 {
+    margin: 0 0 5px 0;
+    color: #6c757d;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.stat-info p {
+    margin: 0;
+    color: #103352;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+/* Layout Principal */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    padding: 0 2rem 2rem 2rem;
+}
+
+.dashboard-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-card h2 {
+    color: #103352;
+    margin-top: 0;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* Formulário de Edição */
+.custom-form .form-group {
+    margin-bottom: 1.25rem;
+}
+.custom-form label {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+.custom-form input[type="text"],
+.custom-form input[type="email"],
+.custom-form input[type="tel"],
+.custom-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: #f8f9fa;
+}
+
+.custom-form input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: #6c757d;
+}
+
+.custom-button {
+    background-color: #103352;
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.custom-button:hover {
+    background-color: #0d2a45;
+}
+
+/* Lista de Feedback */
+.feedback-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+.feedback-card-small {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.feedback-card-small .comment {
+    font-style: italic;
+    color: #343a40;
+    margin-top: 0;
+}
+.feedback-card-small .author-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.stars-small {
+    font-size: 0.8rem;
+}
+
+/* Mensagens de Alerta (do JS) */
+.message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+    .sidebar {
+        /* Você precisará de JS para esconder/mostrar a sidebar no mobile, 
+           mas por enquanto vamos apenas escondê-la */
+        display: none; 
+    }
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+}
