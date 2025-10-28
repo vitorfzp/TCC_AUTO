@@ -5,7 +5,6 @@ require_once 'php/config.php'; // Adiciona a conexão com a base de dados
 $user_info = null; // Garante que a variável sempre exista
 
 // Verifica se o utilizador está logado antes de tentar buscar os dados
-// Esta lógica verifica APENAS o login de 'cliente' (tabela usuario)
 if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente') {
     try {
         $stmt = $pdo->prepare("SELECT nome, email FROM usuario WHERE id = ?");
@@ -16,7 +15,22 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente
         $user_info = null; // Se der erro, a variável fica nula
     }
 }
-// --- FIM DO BLOCO PHP CORRIGIDO ---
+
+// --- NOVA QUERY PARA PROFISSIONAIS EM DESTAQUE (DINÂMICO) ---
+try {
+    // Busca 3 profissionais aleatoriamente da tabela prestadores
+    $stmt_destaques = $pdo->query(
+        "SELECT nome, profissao, mensagem, cpf 
+         FROM prestadores 
+         ORDER BY RAND() 
+         LIMIT 3"
+    );
+    $profissionais_destaque = $stmt_destaques->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Erro ao buscar profissionais em destaque: " . $e->getMessage());
+    $profissionais_destaque = []; // Se der erro, a lista fica vazia
+}
+// --- FIM DO BLOCO PHP ---
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -28,7 +42,161 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente
   <link rel="stylesheet" href="style/style.css" />
   <link rel="stylesheet" href="style/custom.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
+
+  <style>
+    /* Seção: Profissionais em Destaque (Estilo do card mantido) */
+    .sponsored-section {
+      padding: 3rem 2rem;
+      background-color: #f8f9fa;
+      text-align: center;
+    }
+    .sponsored-section h2 {
+      font-size: 2.2rem;
+      color: #103352;
+      margin-bottom: 2.5rem;
+    }
+    .sponsored-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .sponsored-card {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      /* Define uma altura mínima para os cards ficarem mais uniformes */
+      min-height: 280px; 
+      display: flex;
+      flex-direction: column; /* Organiza o conteúdo em coluna */
+    }
+    .sponsored-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .sponsored-card h3 {
+      font-size: 1.3rem;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+    .sponsored-card .profession {
+      display: block;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 1rem;
+    }
+    .sponsored-card p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      flex-grow: 1; /* Faz o parágrafo "empurrar" o botão para baixo */
+    }
+    .sponsored-card .btn-perfil {
+      display: inline-block;
+      align-self: flex-start; /* Alinha o botão ao início */
+      background-color: transparent;
+      color: #1e40af;
+      border: 2px solid #1e40af;
+      padding: 0.6rem 1.25rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .sponsored-card .btn-perfil:hover {
+      background-color: #1e40af;
+      color: #ffffff;
+    }
+
+
+    /* --- Nova Seção: Patrocinador Oficial (COM FOTO) --- */
+    .official-sponsor-section {
+      padding: 4rem 2rem;
+      background-color: #ffffff; /* Fundo branco */
+      text-align: center;
+      border-top: 1px solid #e2e8f0; /* Linha de separação */
+    }
+    .official-sponsor-section .sponsor-tagline {
+      display: block;
+      font-size: 1rem;
+      color: #475569;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .official-sponsor-section h2 {
+      font-size: 2.2rem;
+      color: #103352;
+      margin-bottom: 2.5rem;
+    }
+    .sponsor-content {
+      display: flex;
+      flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+      align-items: center;
+      justify-content: center;
+      gap: 3rem; /* Espaço entre a imagem e o texto */
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left; /* Alinha o texto à esquerda por padrão */
+    }
+    .sponsor-image {
+      flex-basis: 250px; /* Largura base da imagem */
+      flex-grow: 1;
+      max-width: 300px;
+    }
+    .sponsor-image img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .sponsor-details {
+      flex-basis: 400px; /* Largura base do texto */
+      flex-grow: 2; /* Texto ocupa mais espaço */
+    }
+    .sponsor-details h3 {
+      font-size: 1.8rem;
+      color: #1e40af;
+      margin-bottom: 0.75rem;
+    }
+    .sponsor-details p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+    .sponsor-details .btn-sponsor {
+      /* Reutilizando estilo do botão primário do hero */
+      display: inline-block;
+      background-color: #1e40af;
+      color: #ffffff;
+      padding: 12px 28px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .sponsor-details .btn-sponsor:hover {
+      background-color: #103352;
+    }
+    
+    /* Ajuste para telas menores */
+    @media (max-width: 768px) {
+      .sponsor-content {
+        text-align: center; /* Centraliza tudo */
+      }
+      .sponsor-details {
+        text-align: center;
+      }
+    }
+  </style>
+  </head>
 <body>
   <aside class="sidebar">
     <div class="sidebar-header">
@@ -40,15 +208,14 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente
       <a href="index.php" class="menu-item active" title="Início"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span></a>
       <a href="local.php" class="menu-item" title="Serviços"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Serviços</span></a>
 
-      <?php if ($user_info): // Se $user_info foi preenchido (usuário 'cliente' logado) ?>
+      <?php if ($user_info): ?>
         <a href="minha_conta.php" class="menu-item" title="Minha Conta"><i class="fas fa-user-circle"></i><span>Minha Conta</span></a>
         <a href="php/usuario/logout.php" class="menu-item" title="Sair"><i class="fas fa-sign-out-alt"></i><span>Sair</span></a>
-      
-      <?php else: // Se não há usuário logado ?>
+      <?php else: ?>
         <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
       <?php endif; ?>
     </nav>
-    </aside>
+  </aside>
 
   <main class="main-content" id="index-main">
     
@@ -77,7 +244,7 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente
         <div class="about-us-content">
             <span class="section-tagline">Nossa Missão</span>
             <h2>Não é sobre serviços, é sobre confiança.</h2>
-            <p>Nascemos de uma ideia simples: encontrar um profissional qualificado não deveria ser uma tarefa difícil. A Autonowe é mais que uma plataforma, é uma comunidade construída sobre a base da confiança, onde cada serviço realizado fortalece os laços entre clientes e prestadores.</p>
+            <p>Nascemos de uma ideia simples: encontrar um profissional qualificado não deveria ser uma tarefa difícil. O Autonowe é mais que uma plataforma,com ela é possivel ter acesso via whatsapp de varios prestadores além disso, é uma comunidade construída sobre a base da confiança, onde cada serviço realizado fortalece os laços entre clientes e prestadores.</p>
             <ul class="our-values">
                 <li><i class="fas fa-shield-alt"></i> <strong>Segurança em Primeiro Lugar:</strong> Verificamos e validamos profissionais para sua tranquilidade.</li>
                 <li><i class="fas fa-award"></i> <strong>Compromisso com a Qualidade:</strong> Um sistema de avaliação transparente que promove apenas os melhores.</li>
@@ -142,8 +309,58 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente
         </div>
     </section>
 
+    <section class="sponsored-section">
+        <h2>Profissionais em Destaque</h2>
+        <div class="sponsored-grid">
+            
+            <?php if (empty($profissionais_destaque)): ?>
+                <p style="text-align:center; grid-column: 1 / -1; color: #555;">Nenhum profissional em destaque no momento.</p>
+            <?php else: ?>
+                <?php foreach ($profissionais_destaque as $destaque): ?>
+                    <div class="sponsored-card">
+                        <h3><?php echo htmlspecialchars($destaque['nome']); ?></h3>
+                        <span class="profession"><?php echo htmlspecialchars($destaque['profissao']); ?></span>
+                        
+                        <p>
+                          <?php 
+                            $descricao = !empty($destaque['mensagem']) ? $destaque['mensagem'] : 'Profissional com cadastro verificado em nossa plataforma. Clique para ver mais detalhes.';
+                            echo htmlspecialchars($descricao);
+                          ?>
+                        </p>
+                        
+                        <a href="perfil_prestador.php?nome=<?php echo urlencode($destaque['nome']); ?>" class="btn-perfil">
+                          Ver Perfil
+                        </a> 
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+        </div>
+    </section>
+    <section class="official-sponsor-section">
+        <span class="sponsor-tagline">Parceiro Oficial</span>
+        <h2>Conheça Nosso Patrocinador</h2>
+        
+        <div class="sponsor-content">
+            
+            <div class="sponsor-image">
+                <img src="img/vasinformatica-logo-topo.png" alt="Logo do Patrocinador">
+            </div>
+
+            <div class="sponsor-details">
+                <h3>VAS INFORMATICA</h3>
+                <p>
+                A VAS INFORMÁTICA é uma empresa que há mais de 10 anos no mercado vem prestando excelentes serviços de Wirelless, Trabalhando com fibra óptica
+                </p>
+                <a href="https://vasinformatica.com.br/" class="btn-sponsor" target="_blank" rel="noopener">
+                    Visite o Site
+                </a>
+            </div>
+
+        </div>
+    </section>
     <footer class="main-footer">
-        <div class="footer-content">
+      <div class="footer-content">
             <div class="footer-section">
                 <h4>Principais Serviços</h4>
                 <ul>
@@ -159,13 +376,16 @@ if (isset($_SESSION['user_id']) && ($_SESSION['user_type'] ?? null) === 'cliente
                     
                     <li><a href="termos.html">Termos de Uso e Política de Privacidade</a></li>
                     
+                    <li><a href="https://wa.me/5511999999999" target="_blank" rel="noopener">Contato via WhatsApp</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Redes Sociais</h4>
                 <div class="social-icons">
-                    <a href="https://www.instagram.com/autonowe_tcc/"><i class="fab fa-instagram"></i></a>
-                    <a href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJvkXKnJPbXbxkqjTqfmBGxptkLbnlmFJSzJHNLGsWGwlSmZlNrmkznKxPwJNKNVSDKcbkg"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://www.instagram.com/autonowe_tcc/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJvkXKnJPbXbxkqjTqfmBGxptkLbnlmFJSzJHNLGsWGwlSmZlNrmkznKxPwJNKNVSDKcbkg" target="_blank" rel="noopener"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    
+                    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>

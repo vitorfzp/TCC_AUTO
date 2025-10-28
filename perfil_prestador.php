@@ -100,7 +100,172 @@ function formatar_link_whatsapp($telefone, $nome_prestador) {
     <link rel="stylesheet" href="style/custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+
+    <style>
+        /* --- Refinamento do Cabeçalho do Perfil --- */
+        .profile-header {
+            background-color: #ffffff; /* Fundo branco */
+            border-radius: 12px; /* Bordas mais arredondadas */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
+            padding: 2rem; /* Mais espaçamento interno */
+            display: flex; /* Continua flex */
+            flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+            align-items: center; /* Alinha itens verticalmente */
+            gap: 1.5rem; /* Espaço entre os elementos */
+            margin-bottom: 2.5rem; /* Mais espaço abaixo */
+        }
+
+        /* --- Novo Avatar Estilizado --- */
+        .profile-avatar {
+            width: 100px; /* Tamanho maior */
+            height: 100px;
+            border-radius: 50%; /* Círculo perfeito */
+            /* Gradiente com os azuis do tema */
+            background-image: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: #ffffff; /* Ícone branco */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3); /* Sombra do avatar */
+        }
+        .profile-avatar .fa-user-shield {
+            font-size: 3rem; /* Ícone maior */
+        }
+        
+        /* Ajuste no sumário e contato */
+        .profile-summary {
+            flex-grow: 1; /* Ocupa o espaço disponível */
+        }
+        .profile-summary h1 {
+            font-size: 2.2rem; /* Título maior */
+            color: #103352;
+            margin-bottom: 0.25rem;
+        }
+        .profile-summary h2 {
+            font-size: 1.25rem; /* Profissão */
+            color: #3b82f6; /* Cor azul destacada */
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+        .profile-overall-rating {
+            font-size: 1rem;
+            color: #475569;
+        }
+        .profile-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+            margin-left: auto; /* Joga os botões para a direita em telas grandes */
+        }
+
+        /* --- Estilo dos Títulos de Seção (h3) --- */
+        .profile-body h3 {
+            font-size: 1.6rem;
+            color: #103352;
+            margin-top: 2.5rem; /* Mais espaço acima */
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem; /* Espaço abaixo do texto */
+            border-bottom: 3px solid #e2e8f0; /* Linha sutil */
+        }
+
+        /* --- Card para a Seção "Sobre" --- */
+        .profile-about-section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .profile-about-section h3 {
+            margin-top: 0; /* Remove margem do h3 dentro do card */
+            border-bottom: none; /* Remove borda do h3 dentro do card */
+            padding-bottom: 0;
+            margin-bottom: 1rem;
+        }
+        .profile-about-section p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        /* --- Refinamento da Lista de Feedbacks --- */
+        .feedback-item {
+            border: 1px solid #e2e8f0; /* Borda sutil */
+            border-radius: 8px; /* Bordas arredondadas */
+            margin-bottom: 1.5rem; /* Mais espaço entre eles */
+            overflow: hidden; /* Garante que o fundo se aplique */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.3s ease;
+        }
+        .feedback-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .feedback-item-header {
+            background-color: #f8f9fa; /* Fundo leve no cabeçalho do feedback */
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .feedback-item-body {
+            padding: 1.5rem;
+            background-color: #ffffff;
+        }
+        .feedback-item-body .stars {
+            margin-bottom: 0.5rem;
+            display: block; /* Garante que fique acima do parágrafo */
+        }
+        .feedback-item-body p {
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+
+        /* --- Estilos do Modal de QR Code (Mantidos da última vez) --- */
+        .btn-qr-code {
+            background-color: #6c757d; color: #ffffff; padding: 10px 15px;
+            border-radius: 5px; text-decoration: none; font-weight: bold;
+            display: inline-flex; align-items: center; gap: 8px;
+            border: none; cursor: pointer; font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-qr-code:hover { background-color: #5a6268; }
+        .qr-modal-overlay {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center; align-items: center;
+        }
+        .qr-modal-content {
+            background-color: #fefefe; margin: auto; padding: 25px;
+            border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%; max-width: 400px; text-align: center;
+            position: relative; animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .qr-modal-content h3 { margin-top: 0; color: #103352; }
+        .qr-image-container {
+            margin: 20px 0; padding: 10px; background-color: #f8f9fa;
+            border: 1px solid #e2e8f0; border-radius: 8px;
+            display: inline-block;
+        }
+        .qr-image-container img { display: block; width: 200px; height: 200px; }
+        .modal-close-btn {
+            position: absolute; top: 10px; right: 15px;
+            color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer;
+        }
+        .modal-close-btn:hover, .modal-close-btn:focus { color: #000; }
+    </style>
+    </head>
 <body>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -125,6 +290,7 @@ function formatar_link_whatsapp($telefone, $nome_prestador) {
 
     <main class="main-content">
         <section class="main-section">
+            
             <div class="profile-header">
                 <div class="profile-avatar"><i class="fas fa-user-shield"></i></div>
                 <div class="profile-summary">
@@ -139,16 +305,19 @@ function formatar_link_whatsapp($telefone, $nome_prestador) {
 
                 <?php 
                 $link_whatsapp = formatar_link_whatsapp($prestador_info['telefone'] ?? null, $nome_prestador);
+                
                 if ($link_whatsapp): 
                 ?>
                     <div class="profile-contact">
                         <a href="<?php echo $link_whatsapp; ?>" class="btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Entrar em Contato
+                            <i class="fab fa-whatsapp"></i> Iniciar Conversa
                         </a>
+                        <button id="openQrModalBtn" class="btn-qr-code">
+                            <i class="fas fa-qrcode"></i> Escanear QR Code
+                        </button>
                     </div>
                 <?php endif; ?>
-                </div>
-
+            </div>
             <div class="profile-body">
                 
                 <?php if ($prestador_info && !empty(trim($prestador_info['mensagem']))): ?>
@@ -205,10 +374,57 @@ function formatar_link_whatsapp($telefone, $nome_prestador) {
         </section>
     </main>
 
+    <?php if ($link_whatsapp): ?>
+        <div id="whatsAppQrModal" class="qr-modal-overlay">
+            <div class="qr-modal-content">
+                <span id="closeQrModalBtn" class="modal-close-btn">&times;</span>
+                
+                <h3>Abra o WhatsApp no seu celular</h3>
+                <p>Escaneie o código abaixo para iniciar a conversa com <?php echo htmlspecialchars($nome_prestador); ?>.</p>
+                
+                <div class="qr-image-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?php echo urlencode($link_whatsapp); ?>" 
+                         alt="QR Code para WhatsApp de <?php echo htmlspecialchars($nome_prestador); ?>">
+                </div>
+                <br>
+                <small>Desenvolvido por <a href="https://goqr.me/" target="_blank">QR Code API</a></small>
+            </div>
+        </div>
+    <?php endif; ?>
     <script>
         const feedbacksData = <?php echo json_encode($feedbacks); ?>;
     </script>
     <script src="script/session_handler.js" defer></script>
     <script src="script/perfil_chart.js" defer></script>
-</body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona os elementos do modal
+            const modalOverlay = document.getElementById('whatsAppQrModal');
+            const openModalBtn = document.getElementById('openQrModalBtn');
+            const closeModalBtn = document.getElementById('closeQrModalBtn');
+
+            // Se o botão de abrir existe, adiciona o evento de clique
+            if (openModalBtn) {
+                openModalBtn.addEventListener('click', () => {
+                    modalOverlay.style.display = 'flex'; // Mostra o modal
+                });
+            }
+
+            // Se o botão de fechar existe, adiciona o evento de clique
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => {
+                    modalOverlay.style.display = 'none'; // Esconde o modal
+                });
+            }
+
+            // Fecha o modal se o usuário clicar fora da caixa de conteúdo
+            window.addEventListener('click', (event) => {
+                if (event.target === modalOverlay) {
+                    modalOverlay.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    </body>
 </html>
