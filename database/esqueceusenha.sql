@@ -1,11 +1,11 @@
--- Cria a base de dados se ela não existir, com o conjunto de caracteres recomendado.
+-- Cria a base de dados se ela não existir
 CREATE DATABASE IF NOT EXISTS cadastro_site CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Seleciona a base de dados para usar nos comandos seguintes.
+-- Seleciona a base de dados
 USE cadastro_site;
 
 -- --- ESTRUTURA DAS TABELAS ---
--- Apaga as tabelas existentes na ordem inversa de dependência para evitar erros.
+-- Apaga as tabelas existentes na ordem inversa de dependência
 DROP TABLE IF EXISTS feedbacks;
 DROP TABLE IF EXISTS prestadores;
 DROP TABLE IF EXISTS usuario;
@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS usuario;
 
 -- --------------------------------------------------------
 -- ESTRUTURA DA TABELA: usuario
--- Armazena os dados dos clientes que se cadastram para usar o site.
 -- --------------------------------------------------------
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -29,13 +28,13 @@ CREATE TABLE usuario (
 
 -- --------------------------------------------------------
 -- ESTRUTURA DA TABELA: prestadores
--- Armazena os dados dos profissionais que oferecem serviços.
 -- --------------------------------------------------------
 CREATE TABLE prestadores (
     cpf VARCHAR(14) PRIMARY KEY NOT NULL,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    telefone VARCHAR(20) NULL DEFAULT NULL, -- Campo para o WhatsApp
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20) NULL DEFAULT NULL, 
     profissao VARCHAR(100) NOT NULL,
     arquivo VARCHAR(255),
     mensagem TEXT,
@@ -44,16 +43,29 @@ CREATE TABLE prestadores (
 
 
 -- --------------------------------------------------------
--- ESTRUTURA DA TABELA: feedbacks
--- Armazena as avaliações que os 'usuarios' fazem sobre os 'prestadores'.
+-- ESTRUTURA DA TABELA: feedbacks (***CORRIGIDA***)
 -- --------------------------------------------------------
 CREATE TABLE feedbacks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
-    nome_prestador VARCHAR(100) NOT NULL,
-    profissao VARCHAR(100),
+    prestador_cpf VARCHAR(14) NOT NULL,
     nota INT,
     comentario TEXT,
     data_feedback TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
+
+    -- Chave estrangeira ligando ao CLIENTE
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    
+    -- Chave estrangeira ligando ao PRESTADOR
+    FOREIGN KEY (prestador_cpf) REFERENCES prestadores(cpf) ON DELETE CASCADE
 );
+
+SELECT * FROM prestadores;
+DELETE FROM prestadores WHERE cpf= "";
+
+
+SELECT * FROM usuario;
+DELETE FROM usuario WHERE cpf= "";
+
+SELECT * FROM feedbacks;
+DELETE FROM usuario WHERE id= "";

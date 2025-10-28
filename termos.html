@@ -14,6 +14,39 @@
         .main-section h3 { margin-top: 1.5rem; color: #1e40af; }
         .main-section p, .main-section li { color: #475569; line-height: 1.6; }
         .main-section ul { padding-left: 20px; }
+
+        /* --- ESTILOS DO BOTÃO ADICIONADOS --- */
+
+        /* 1. Container para centralizar o botão */
+        .container-botao {
+            text-align: center; /* Centraliza o conteúdo (o link/botão) */
+            margin-top: 2.5rem; /* Adiciona um espaço acima do botão */
+            margin-bottom: 1rem; /* Adiciona um espaço abaixo do botão */
+        }
+
+        /* 2. Estilização do botão #botones */
+        #botones {
+            display: inline-block; /* Permite aplicar padding e manter centralizado */
+            background-color: #1e40af; /* Azul forte (usado nos H3) */
+            color: #ffffff; /* Texto branco */
+            padding: 12px 28px; /* Espaçamento interno (altura, largura) */
+            border: none; /* Remove a borda padrão */
+            border-radius: 6px; /* Bordas arredondadas */
+            font-size: 1rem; /* Tamanho da fonte */
+            font-weight: bold; /* Fonte em negrito */
+            text-transform: uppercase; /* Texto em maiúsculas */
+            cursor: pointer; /* Muda o cursor para "mãozinha" */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Efeito suave */
+            text-decoration: none; /* Garante que não haja sublinhado do link */
+        }
+
+        /* 3. Efeito ao passar o mouse */
+        #botones:hover {
+            background-color: #103352; /* Azul escuro (usado no H1) */
+            transform: translateY(-2px); /* Leve elevação ao passar o mouse */
+        }
+        /* --- FIM DOS ESTILOS DO BOTÃO --- */
+
     </style>
 </head>
 <body>
@@ -79,6 +112,10 @@
             
             <h3>6. Limitação de Responsabilidade</h3>
             <p>Em nenhuma circunstância o Autonowe será responsável por danos diretos ou indiretos resultantes de negociações ou serviços prestados através da plataforma. Toda a responsabilidade pela contratação e execução de serviços é das partes envolvidas (Utilizador e Prestador).</p>
+
+            <div class="container-botao">
+                <a href="index.php"><button id="botones">voltar</button></a>
+            </div>
 
         </section>
     </main>
