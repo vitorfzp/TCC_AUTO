@@ -1,6 +1,28 @@
 <?php
 require_once 'php/auth_guard.php';
 
+// --- INÍCIO DA CORREÇÃO (BLOCO PHP ADICIONADO) ---
+// Busca os dados do usuário para o menu
+$user_info = null;
+$user_type = $_SESSION['user_type'] ?? null;
+$user_id = $_SESSION['user_id'] ?? null;
+
+// Verifica se o usuário é um 'cliente' logado para buscar infos
+if ($user_type === 'cliente' && $user_id) {
+    try {
+        if (isset($pdo)) { // $pdo deve vir do auth_guard.php (via config.php)
+            $stmt = $pdo->prepare("SELECT nome, email FROM usuario WHERE id = ?");
+            $stmt->execute([$user_id]);
+            $user_info = $stmt->fetch();
+        }
+    } catch (PDOException $e) {
+        error_log("Erro ao buscar dados do usuário em perfil_prestador.php: " . $e->getMessage());
+        $user_info = null; // Garante que $user_info seja nulo em caso de erro
+    }
+}
+// --- FIM DA CORREÇÃO ---
+
+
 $nome_prestador = urldecode($_GET['nome'] ?? '');
 
 if (empty($nome_prestador)) {
@@ -8,8 +30,9 @@ if (empty($nome_prestador)) {
 }
 
 try {
-    // ATUALIZADO: Busca a mensagem, telefone e profissão do profissional
-    $stmt_info = $pdo->prepare("SELECT mensagem, telefone, profissao FROM prestadores WHERE nome = ?");
+    // --- CORREÇÃO 1: Buscar o CPF do prestador ---
+    // Pedimos também o 'cpf' do prestador
+    $stmt_info = $pdo->prepare("SELECT cpf, mensagem, telefone, profissao FROM prestadores WHERE nome = ?");
     $stmt_info->execute([$nome_prestador]);
     $prestador_info = $stmt_info->fetch();
 
@@ -18,7 +41,10 @@ try {
         die("Prestador não encontrado.");
     }
 
+    // --- FIM DA CORREÇÃO 1 ---
+
     // Busca TODOS os feedbacks individuais para este prestador
+    // --- CORREÇÃO 2: Usar o CPF para buscar os feedbacks ---
     $stmt_feedbacks = $pdo->prepare("
         SELECT 
             f.nota, 
@@ -27,11 +53,13 @@ try {
             u.nome as nome_usuario
         FROM feedbacks f
         JOIN usuario u ON f.usuario_id = u.id
-        WHERE f.nome_prestador = ?
+        WHERE f.prestador_cpf = ? -- <-- MUDANÇA AQUI (de 'nome_prestador' para 'prestador_cpf')
         ORDER BY f.data_feedback DESC
     ");
-    $stmt_feedbacks->execute([$nome_prestador]);
+    // Usamos o CPF que buscamos na consulta anterior
+    $stmt_feedbacks->execute([$prestador_info['cpf']]); // <-- MUDANÇA AQUI
     $feedbacks = $stmt_feedbacks->fetchAll();
+    // --- FIM DA CORREÇÃO 2 ---
 
     // Calcula as estatísticas gerais a partir dos feedbacks buscados
     $total_avaliacoes = count($feedbacks);
@@ -67,7 +95,7 @@ function formatar_link_whatsapp($telefone, $nome_prestador) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de <?php echo htmlspecialchars($nome_prestador); ?> - Autonowe</title>
-    <link rel="icon" type="image/png" href="img/logoc.png">
+    <link rel="icon" type="image/png" href="img/LOGO.png"> 
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -75,16 +103,25 @@ function formatar_link_whatsapp($telefone, $nome_prestador) {
 </head>
 <body>
     <aside class="sidebar">
-    <div class="sidebar-header">
-      <img src="img/LOGO.png" alt="Logo Autonowe" class="logo-icon" />
-      <h2 class="brand-title">AUTONOWE</h2>
-    </div>
+        <div class="sidebar-header">
+            <img src="img/LOGO.png" alt="Logo Autonowe" class="logo-icon" />
+            <h2 class="brand-title">AUTONOWE</h2>
+        </div>
+        
         <nav class="sidebar-menu">
             <a href="index.php" class="menu-item" title="Início"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span></a>
             <a href="local.php" class="menu-item active" title="Serviços"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Serviços</span></a>
-            <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
+                
+
+            <?php if ($user_info && $user_type === 'cliente'): // Se for cliente logado ?>
+                <a href="minha_conta.php" class="menu-item" title="Minha Conta"><i class="fas fa-user-circle"></i><span>Minha Conta</span></a>
+                <a href="php/usuario/logout.php" class="menu-item" title="Sair"><i class="fas fa-sign-out-alt"></i><span>Sair</span></a>
+            
+            <?php else: // Para prestadores ou visitantes ?>
+                <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
+            <?php endif; ?>
         </nav>
-    </aside>
+        </aside>
 
     <main class="main-content">
         <section class="main-section">

@@ -15,7 +15,7 @@
     <div class="auth-container">
         <div class="logo-section">
             <div class="logo-container">
-                <img src="img/logoc.png" alt="AUTONOWE Logo">
+            <img src="img/LOGO.png" alt="Logo Autonowe" class="logo-icon" />
                 <h1>AUTONOWE</h1>
             </div>
         </div>
@@ -63,7 +63,7 @@
                         <option value="" disabled selected>Selecione sua profissão</option>
                         <option value="Limpeza Geral">Limpeza Geral</option>
                         <option value="Pedreiro">Pedreiro</option>
-                        <option valueDezembroJardineiro">Jardineiro</option>
+                        <option value="Jardineiro">Jardineiro</option>
                         <option value="Segurança">Segurança</option>
                         <option value="Animador de Festa">Animador de Festa</option>
                         <option value="Barman">Barman</option>

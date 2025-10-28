@@ -1,7 +1,29 @@
 <?php
 require_once 'php/auth_guard.php';
 
-// --- LÓGICA PHP ATUALIZADA ---
+// --- INÍCIO DA CORREÇÃO (BLOCO PHP ADICIONADO) ---
+// Busca os dados do usuário para o menu
+$user_info = null;
+$user_type = $_SESSION['user_type'] ?? null;
+$user_id = $_SESSION['user_id'] ?? null;
+
+// Verifica se o usuário é um 'cliente' logado para buscar infos
+if ($user_type === 'cliente' && $user_id) {
+    try {
+        if (isset($pdo)) { // $pdo deve vir do auth_guard.php (via config.php)
+            $stmt = $pdo->prepare("SELECT nome, email FROM usuario WHERE id = ?");
+            $stmt->execute([$user_id]);
+            $user_info = $stmt->fetch();
+        }
+    } catch (PDOException $e) {
+        error_log("Erro ao buscar dados do usuário em servico_detalhe.php: " . $e->getMessage());
+        $user_info = null; // Garante que $user_info seja nulo em caso de erro
+    }
+}
+// --- FIM DA CORREÇÃO ---
+
+
+// --- LÓGICA PHP EXISTENTE ---
 $servico_selecionado = $_GET['servico'] ?? 'N/A';
 $termo_busca = trim($_GET['busca'] ?? '');
 
@@ -18,12 +40,12 @@ $descricoes_servicos = [
 $descricao_atual = $descricoes_servicos[$servico_selecionado] ?? 'Encontre os profissionais mais bem avaliados pela nossa comunidade.';
 
 try {
-    // Busca TODOS os prestadores daquela área (para a lista principal e para o formulário)
+    // --- CORREÇÃO 1: Consulta $sql_prestadores ---
     $sql_prestadores = "
         SELECT
-            p.cpf, p.nome AS nome_prestador, p.profissao, AVG(f.nota) AS media_notas, COUNT(f.id) AS total_avaliacoes -- // MUDANÇA 1: Adicionado p.cpf
+            p.cpf, p.nome AS nome_prestador, p.profissao, AVG(f.nota) AS media_notas, COUNT(f.id) AS total_avaliacoes
         FROM prestadores p
-        LEFT JOIN feedbacks f ON p.nome = f.nome_prestador AND p.profissao = f.profissao
+        LEFT JOIN feedbacks f ON p.cpf = f.prestador_cpf
         WHERE p.profissao = :servico";
 
     if (!empty($termo_busca)) {
@@ -38,11 +60,14 @@ try {
     $stmt_prestadores->execute($params);
     $prestadores = $stmt_prestadores->fetchAll();
 
-    // Busca os 3 feedbacks MAIS RECENTES para a barra lateral
+    // --- CORREÇÃO 2: Consulta $stmt_recentes ---
     $stmt_recentes = $pdo->prepare("
-        SELECT f.comentario, f.nota, u.nome as nome_usuario, f.nome_prestador
-        FROM feedbacks f JOIN usuario u ON f.usuario_id = u.id
-        WHERE f.profissao = ? ORDER BY f.data_feedback DESC LIMIT 3
+        SELECT f.comentario, f.nota, u.nome as nome_usuario, p.nome as nome_prestador
+        FROM feedbacks f 
+        JOIN usuario u ON f.usuario_id = u.id
+        JOIN prestadores p ON f.prestador_cpf = p.cpf
+        WHERE p.profissao = ?
+        ORDER BY f.data_feedback DESC LIMIT 3
     ");
     $stmt_recentes->execute([$servico_selecionado]);
     $feedbacks_recentes = $stmt_recentes->fetchAll();
@@ -70,12 +95,21 @@ try {
             <img src="img/LOGO.png" alt="Logo Autonowe" class="logo-icon" />
             <h2 class="brand-title">AUTONOWE</h2>
         </div>
+        
         <nav class="sidebar-menu">
             <a href="index.php" class="menu-item" title="Início"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span></a>
             <a href="local.php" class="menu-item active" title="Serviços"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Serviços</span></a>
-            <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
+           
+
+            <?php if ($user_info && $user_type === 'cliente'): // Se for cliente logado ?>
+                <a href="minha_conta.php" class="menu-item" title="Minha Conta"><i class="fas fa-user-circle"></i><span>Minha Conta</span></a>
+                <a href="php/usuario/logout.php" class="menu-item" title="Sair"><i class="fas fa-sign-out-alt"></i><span>Sair</span></a>
+            
+            <?php else: // Para prestadores ou visitantes ?>
+                <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
+            <?php endif; ?>
         </nav>
-    </aside>
+        </aside>
 
     <main class="main-content">
         <section class="service-header">
@@ -209,6 +243,7 @@ try {
 
     <script src="script/session_handler.js" defer></script>
     <script>
+        // O JavaScript não precisa de alterações, ele já está correto.
         document.addEventListener('DOMContentLoaded', () => {
             const modalOverlay = document.getElementById('feedbackFormModal');
             const openModalBtn = document.getElementById('openFeedbackModalBtn');
@@ -230,29 +265,21 @@ try {
                 }
             });
 
-            // --- MUDANÇA 3: INÍCIO DO NOVO CÓDIGO JAVASCRIPT ---
-            // Este script atualiza o campo oculto 'hidden_nome_prestador' com o nome
-            // do prestador selecionado no dropdown.
             const prestadorSelect = document.getElementById('prestador_cpf_select');
             const hiddenNomeInput = document.getElementById('hidden_nome_prestador');
 
             if (prestadorSelect) {
-                // Define o valor inicial (caso haja um valor já selecionado ao carregar)
                 if (prestadorSelect.selectedIndex > 0) {
                     hiddenNomeInput.value = prestadorSelect.options[prestadorSelect.selectedIndex].text;
                 }
-
-                // Adiciona o "ouvinte" de mudança
                 prestadorSelect.addEventListener('change', () => {
                     if (prestadorSelect.selectedIndex > 0) {
-                        // Pega o TEXTO da opção selecionada (que é o nome)
                         hiddenNomeInput.value = prestadorSelect.options[prestadorSelect.selectedIndex].text;
                     } else {
-                        hiddenNomeInput.value = ''; // Limpa se selecionar o "Escolha..."
+                        hiddenNomeInput.value = ''; 
                     }
                 });
             }
-            // --- FIM DO NOVO CÓDIGO JAVASCRIPT ---
 
             const params = new URLSearchParams(window.location.search);
             const messageArea = document.getElementById('message-area');
@@ -263,7 +290,6 @@ try {
             } else if (success) {
                 messageArea.innerHTML = `<p class="message success">${decodeURIComponent(success)}</p>`;
             }
-            // Limpa a URL para a mensagem não reaparecer
             if(error || success) {
                 window.history.replaceState({}, document.title, window.location.pathname + '?servico=' + encodeURIComponent('<?php echo $servico_selecionado; ?>'));
             }

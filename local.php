@@ -1,6 +1,28 @@
 <?php
-// 1. Simplesmente inclua o novo auth_guard. Ele faz todo o trabalho!
+// 1. Inclui o 'auth_guard', que deve iniciar a sessão e carregar o 'config.php'
 require_once 'php/auth_guard.php';
+
+// --- INÍCIO DA CORREÇÃO (BLOCO PHP ADICIONADO) ---
+// Busca os dados do usuário para o menu
+$user_info = null;
+$user_type = $_SESSION['user_type'] ?? null;
+$user_id = $_SESSION['user_id'] ?? null;
+
+// Verifica se o usuário é um 'cliente' logado para buscar infos
+if ($user_type === 'cliente' && $user_id) {
+    try {
+        // Prepara a consulta (assumindo que $pdo está em 'auth_guard.php' ou 'config.php')
+        if (isset($pdo)) {
+            $stmt = $pdo->prepare("SELECT nome, email FROM usuario WHERE id = ?");
+            $stmt->execute([$user_id]);
+            $user_info = $stmt->fetch();
+        }
+    } catch (PDOException $e) {
+        error_log("Erro ao buscar dados do usuário em local.php: " . $e->getMessage());
+        $user_info = null; // Garante que $user_info seja nulo em caso de erro
+    }
+}
+// --- FIM DA CORREÇÃO ---
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +35,7 @@ require_once 'php/auth_guard.php';
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <aside class="sidebar">
@@ -20,12 +43,20 @@ require_once 'php/auth_guard.php';
             <img src="img/LOGO.png" alt="Logo Autonowe" class="logo-icon" />
             <h2 class="brand-title">AUTONOWE</h2>
         </div>
+        
         <nav class="sidebar-menu">
             <a href="index.php" class="menu-item" title="Início"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span></a>
             <a href="local.php" class="menu-item active" title="Serviços"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Serviços</span></a>
-            <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
+           
+            <?php if ($user_info && $user_type === 'cliente'): // Se for cliente logado ?>
+                <a href="minha_conta.php" class="menu-item" title="Minha Conta"><i class="fas fa-user-circle"></i><span>Minha Conta</span></a>
+                <a href="php/usuario/logout.php" class="menu-item" title="Sair"><i class="fas fa-sign-out-alt"></i><span>Sair</span></a>
+            
+            <?php else: // Para prestadores ou visitantes ?>
+                <a href="login.html" class="menu-item" title="Login"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V9h8v2z"/></svg><span>Login / Cadastro</span></a>
+            <?php endif; ?>
         </nav>
-    </aside>
+        </aside>
 
     <main class="main-content">
         <section class="main-section">
@@ -46,7 +77,7 @@ require_once 'php/auth_guard.php';
 
                 <a href="servico_detalhe.php?servico=Pedreiro" class="service-card-link">
                     <div class="service-card">
-                        <img src="https://emplaco.com.br/wp-content/uploads/2021/12/Pedreiro-em-Nova-Lima-1024x769.jpg" alt="Pedreiro">
+                        <img src="https://media.istockphoto.com/id/622800884/pt/foto/close-up-of-industrial-bricklayer-installing-bricks-on-construction-site.jpg?s=612x612&w=0&k=20&c=yJ3vnBuPtYxiWfEqEoHA1emR7ePbroJsbRe2gvsxNr0=" alt="Pedreiro">
                         <div class="card-content">
                             <h3>Pedreiro</h3>
                             <p>Construção de estruturas de concreto armado e Casas, além de reformar.</p>
